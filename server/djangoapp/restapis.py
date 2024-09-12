@@ -3,13 +3,13 @@ This module provides functions for interacting with external APIs related
 to car reviews and sentiment analysis.
 
 Functions:
- - get_request(endpoint, **kwargs): Sends a GET request to 
+ - get_request(endpoint, **kwargs): Sends a GET request to
 the specified endpoint with optional query parameters.
- - analyze_review_sentiments(text): Analyzes the sentiment of 
+ - analyze_review_sentiments(text): Analyzes the sentiment of
 the provided text using the sentiment analyzer service.
  - post_review(data_dict): Posts a review to the backend service.
 
-The module utilizes the `requests` library for HTTP operations and `dotenv` 
+The module utilizes the `requests` library for HTTP operations and `dotenv`
 to manage environment variables.
 """
 
@@ -33,15 +33,15 @@ def get_request(endpoint, **kwargs):
     Perform a GET request to the specified endpoint with optional parameters.
 
     Args:
-        endpoint (str): The endpoint to send the GET request to.
-        **kwargs: Optional query parameters to include in the request.
+    endpoint (str): The endpoint to send the GET request to.
+    **kwargs: Optional query parameters to include in the request.
 
     Returns:
         dict: The JSON response from the server.
 
     Raises:
-        requests.RequestException: If the request fails or 
-        the response cannot be parsed.
+    requests.RequestException: If the request fails or
+    the response cannot be parsed.
     """
     params = "&".join(f"{key}={value}" for key, value in kwargs.items())
     request_url = f"{backend_url}{endpoint}?{params}"
@@ -58,7 +58,7 @@ def get_request(endpoint, **kwargs):
 
 def analyze_review_sentiments(text):
     """
-    Analyze the sentiment of the given text using 
+    Analyze the sentiment of the given text using
     the sentiment analyzer service.
 
     Args:
@@ -68,8 +68,8 @@ def analyze_review_sentiments(text):
         dict: The sentiment analysis result.
 
     Raises:
-        requests.RequestException: If the request fails or 
-        the response cannot be parsed.
+    requests.RequestException: If the request fails or
+    the response cannot be parsed.
     """
     request_url = f"{sentiment_analyzer_url}analyze/{text}"
     try:
@@ -79,6 +79,7 @@ def analyze_review_sentiments(text):
     except requests.RequestException as e:
         print(f"Error during sentiment analysis: {e}")
         return {"error": str(e)}  # Return an error message
+
 
 def post_review(data_dict):
     """
@@ -91,8 +92,8 @@ def post_review(data_dict):
         dict: The server's response.
 
     Raises:
-        requests.RequestException: If the request fails or 
-        the response cannot be parsed.
+    requests.RequestException: If the request fails or
+    the response cannot be parsed.
     """
     request_url = f"{backend_url}/insert_review"
     try:
