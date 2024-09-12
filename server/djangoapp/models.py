@@ -13,8 +13,7 @@ class CarMake(models.Model):
     """
     name = models.CharField(max_length=100)
     description = models.TextField()
-# - Any other fields you would like to include in car make model
-    
+# - Any other fields you would like to include in car make model 
     def __str__(self):
         return self.name
 
