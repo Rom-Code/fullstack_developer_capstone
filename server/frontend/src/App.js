@@ -10,8 +10,8 @@ function App() {
         <Routes>
           {/* Define routes for different components */}
           
-          <Route path="/login" element={<LoginPanel />} />
-          <Route path="/register" element={<RegistrationPanel />} />
+          <Route path="/login" element={<LoginPanel/>} />
+          <Route path="/register" element={<RegistrationPanel/>} />
           <Route path="/dealers" element={<Dealers/>} />
           <Route path="/postreview/:id" element={<PostReview/>} />
           <Route path="/dealer/:id" element={<Dealer/>} />
