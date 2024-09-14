@@ -43,17 +43,21 @@ def get_request(endpoint, **kwargs):
     requests.RequestException: If the request fails or
     the response cannot be parsed.
     """
-    params = "&".join(f"{key}={value}" for key, value in kwargs.items())
-    request_url = f"{backend_url}{endpoint}?{params}"
+    params = ""
+    if(kwargs):
+        for key,value in kwargs.items():
+            params=params+key+"="+value+"&"
 
-    print(f"GET from {request_url}")
+    request_url = backend_url+endpoint+"?"+params
+
+    print("GET from {} ".format(request_url))
     try:
-        response = requests.get(request_url, timeout=10)  # Added timeout
-        response.raise_for_status()  # Raise an error for HTTP codes 4xx/5xx
+        # Call get method of requests library with URL and parameters
+        response = requests.get(request_url)
         return response.json()
-    except requests.RequestException as e:
-        print(f"Error during GET request: {e}")
-        raise  # Re-raise the exception for higher-level handling
+    except:
+        # If any error occurs
+        print("Network exception occurred")
 
 
 def analyze_review_sentiments(text):
@@ -71,40 +75,21 @@ def analyze_review_sentiments(text):
     requests.RequestException: If the request fails or
     the response cannot be parsed.
     """
-    request_url = f"{sentiment_analyzer_url}analyze/{text}"
+    request_url = sentiment_analyzer_url+"analyze/"+text
     try:
-        response = requests.get(request_url, timeout=10)  # Added timeout
-        response.raise_for_status()  # Raise an error for HTTP codes 4xx/5xx
+        # Call get method of requests library with URL and parameters
+        response = requests.get(request_url)
         return response.json()
-    except requests.RequestException as e:
-        print(f"Error during sentiment analysis: {e}")
-        return {"error": str(e)}  # Return an error message
+    except Exception as err:
+        print(f"Unexpected {err=}, {type(err)=}")
+        print("Network exception occurred")
 
 
 def post_review(data_dict):
-    """
-    Post a review to the backend service.
-
-    Args:
-        data_dict (dict): The review data to post.
-
-    Returns:
-        dict: The server's response.
-
-    Raises:
-    requests.RequestException: If the request fails or
-    the response cannot be parsed.
-    """
-    request_url = f"{backend_url}/insert_review"
+    request_url = backend_url+"/insert_review"
     try:
-        response = requests.post(
-            request_url,
-            json=data_dict,
-            timeout=10  # Added timeout
-        )
-        response.raise_for_status()  # Raise an error for HTTP codes 4xx/5xx
+        response = requests.post(request_url,json=data_dict)
         print(response.json())
         return response.json()
-    except requests.RequestException as e:
-        print(f"Error during POST request: {e}")
-        return {"error": str(e)}  # Return an error message
+    except:
+        print("Network exception occurred")
