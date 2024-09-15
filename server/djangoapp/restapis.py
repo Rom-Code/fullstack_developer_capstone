@@ -17,32 +17,16 @@ import os
 import requests
 from dotenv import load_dotenv
 
-# Load environment variables from a .env file
 load_dotenv()
 
-# Retrieve backend and sentiment analyzer URLs from environment variables
-backend_url = os.getenv('backend_url', default="http://localhost:3030")
+backend_url = os.getenv(
+    'backend_url', default="http://localhost:3030")
 sentiment_analyzer_url = os.getenv(
     'sentiment_analyzer_url',
-    default="http://localhost:5050/"
-)
+    default="http://localhost:5050/")
 
 
 def get_request(endpoint, **kwargs):
-    """
-    Perform a GET request to the specified endpoint with optional parameters.
-
-    Args:
-    endpoint (str): The endpoint to send the GET request to.
-    **kwargs: Optional query parameters to include in the request.
-
-    Returns:
-        dict: The JSON response from the server.
-
-    Raises:
-    requests.RequestException: If the request fails or
-    the response cannot be parsed.
-    """
     params = ""
     if(kwargs):
         for key,value in kwargs.items():
@@ -61,20 +45,6 @@ def get_request(endpoint, **kwargs):
 
 
 def analyze_review_sentiments(text):
-    """
-    Analyze the sentiment of the given text using
-    the sentiment analyzer service.
-
-    Args:
-        text (str): The review text to analyze.
-
-    Returns:
-        dict: The sentiment analysis result.
-
-    Raises:
-    requests.RequestException: If the request fails or
-    the response cannot be parsed.
-    """
     request_url = sentiment_analyzer_url+"analyze/"+text
     try:
         # Call get method of requests library with URL and parameters
