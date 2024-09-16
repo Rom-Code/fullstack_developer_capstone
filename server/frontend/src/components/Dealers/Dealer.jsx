@@ -86,6 +86,9 @@ return(
         </div>
       ))}
     </div>  
+    <div>
+        <a href={`/searchcars/${id}`}>SearchCars</a>	
+    </div>
   </div>
 )
 }
