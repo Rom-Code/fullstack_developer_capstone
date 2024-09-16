@@ -28,7 +28,10 @@ mileage: {
     type: Number,
     required: true
   },
-
+price: {
+    type: Number,
+    required: true
+  }
 });
 
 module.exports = mongoose.model('cars', cars);
